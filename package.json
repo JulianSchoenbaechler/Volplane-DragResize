@@ -1,10 +1,10 @@
 {
-  "name": "Volplane-DragResize",
+  "name": "volplane-drag-resize",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name volplane-drag-resize --dest ./lib ./src/components/DragResize.vue && vue-cli-service build --dest ./dist",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -39,6 +39,6 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
+    "not ie <= 9"
   ]
 }

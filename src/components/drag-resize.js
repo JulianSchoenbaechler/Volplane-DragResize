@@ -1,3 +1,4 @@
+const minSnapDistance = 5;
 const stickSize = 8;
 const styleMapping = {
   y: {
@@ -52,26 +53,26 @@ export default {
     },
     gridX: {
       type: Number,
-      default: 50,
+      default: 5,
       validator(val) {
         return val > 0;
       },
     },
     gridY: {
       type: Number,
-      default: 50,
+      default: 5,
       validator(val) {
         return val > 0;
       },
     },
-    parentW: {
+    parentPixelW: {
       type: Number,
       default: 0,
       validator(val) {
         return val >= 0;
       },
     },
-    parentH: {
+    parentPixelH: {
       type: Number,
       default: 0,
       validator(val) {
@@ -80,28 +81,28 @@ export default {
     },
     w: {
       type: Number,
-      default: 100,
+      default: 10,
       validator(val) {
         return val > 0;
       },
     },
     h: {
       type: Number,
-      default: 100,
+      default: 10,
       validator(val) {
         return val > 0;
       },
     },
     minW: {
       type: Number,
-      default: 50,
+      default: 5,
       validator(val) {
         return val > 0;
       },
     },
     minH: {
       type: Number,
-      default: 50,
+      default: 5,
       validator(val) {
         return val > 0;
       },
@@ -145,10 +146,10 @@ export default {
   computed: {
     style() {
       return {
-        top: `${this.top}px`,
-        left: `${this.left}px`,
-        width: `${this.right - this.left}px`,
-        height: `${this.bottom - this.top}px`,
+        top: `${this.top}%`,
+        left: `${this.left}%`,
+        width: `${this.right - this.left}%`,
+        height: `${this.bottom - this.top}%`,
         zIndex: this.z,
       };
     },
@@ -177,27 +178,14 @@ export default {
 
     rect() {
       return {
-        top: Math.round(this.top),
-        right: Math.round(this.parentWidth - this.right),
-        bottom: Math.round(this.parentHeight - this.bottom),
-        left: Math.round(this.left),
-        width: Math.round(this.width),
-        height: Math.round(this.height),
-        x: Math.round(this.left),
-        y: Math.round(this.top),
-      };
-    },
-
-    normalizedRect() {
-      return {
-        top: this.top / this.parentHeight,
-        right: (this.parentWidth - this.right) / this.parentWidth,
-        bottom: (this.parentHeight - this.bottom) / this.parentHeight,
-        left: this.left / this.parentWidth,
-        width: 1,
-        height: 1,
-        x: this.left / this.parentWidth,
-        y: this.top / this.parentHeight,
+        top: this.top,
+        right: 100 - this.right,
+        bottom: 100 - this.bottom,
+        left: this.left,
+        width: this.width,
+        height: this.height,
+        x: this.left,
+        y: this.top,
       };
     },
   },
@@ -283,6 +271,44 @@ export default {
       }
     },
 
+    calcSnapping(x, y) {
+      const divX = x / this.gridX;
+      const divY = y / this.gridY;
+      const lowerX = Math.floor(divX) * this.gridX;
+      const upperX = Math.ceil(divX) * this.gridX;
+      const lowerY = Math.floor(divY) * this.gridY;
+      const upperY = Math.ceil(divY) * this.gridY;
+      const value = {
+        snapX: true,
+        snapY: true,
+        diffX: 0,
+        diffY: 0,
+        newX: 0,
+        newY: 0,
+      };
+
+      if ((x - lowerX) <= (upperX - x)) {
+        value.diffX = x - lowerX;
+        value.newX = lowerX;
+      } else {
+        value.diffX = upperX - x;
+        value.newX = upperX;
+      }
+
+      if ((y - lowerY) <= (upperY - y)) {
+        value.diffY = y - lowerY;
+        value.newY = lowerY;
+      } else {
+        value.diffY = upperY - y;
+        value.newY = upperY;
+      }
+
+      if (value.diffX > minSnapDistance) { value.snapX = false; }
+      if (value.diffY > minSnapDistance) { value.snapY = false; }
+
+      return value;
+    },
+
     bodyDown(event) {
       if (!this.preventActiveBehavior) {
         this.active = true;
@@ -314,13 +340,13 @@ export default {
     calcDragLimitation() {
       return {
         minLeft: 0,
-        maxLeft: this.parentWidth - this.width,
+        maxLeft: 100 - this.width,
         minRight: this.width,
-        maxRight: this.parentWidth,
+        maxRight: 100,
         minTop: 0,
-        maxTop: this.parentHeight - this.height,
+        maxTop: 100 - this.height,
         minBottom: this.height,
-        maxBottom: this.parentHeight,
+        maxBottom: 100,
       };
     },
 
@@ -330,16 +356,41 @@ export default {
         y: this.axis !== 'x' ? this.stickStartPos.mouseY - event.pageY : 0,
       };
 
-      // let newTop = stickStartPos.top - delta.y;
-      // let newBottom = stickStartPos.bottom + delta.y;
-      // let newLeft = stickStartPos.left - delta.x;
-      // let newRight = stickStartPos.right + delta.x;
+      const offsetX = (100 / this.parentWidth) * delta.x;
+      const offsetY = (100 / this.parentHeight) * delta.y;
 
-      /* if (this.snapToGrid) {
-        let alignTop = true;
-        let alignLeft = true;
+      let newTop = this.stickStartPos.t - offsetY;
+      let newBottom = this.stickStartPos.b - offsetY;
+      let newLeft = this.stickStartPos.l - offsetX;
+      let newRight = this.stickStartPos.r - offsetX;
 
-        let diffT = newTop - Math.floor(newTop / gridY) * gridY;
+      if (this.snapToGrid) {
+        const snapTopLeft = this.calcSnapping(newLeft, newTop);
+        const snapBottomRight = this.calcSnapping(newRight, newBottom);
+
+        // Snap x axis
+        if (snapTopLeft.snapX || snapBottomRight.snapX) {
+          if (snapTopLeft.diffX <= snapBottomRight.diffX) {
+            newLeft = snapTopLeft.newX;
+            newRight = newLeft + this.width;
+          } else {
+            newRight = snapBottomRight.newX;
+            newLeft = newRight - this.width;
+          }
+        }
+
+        // Snap y axis
+        if (snapTopLeft.snapY || snapBottomRight.snapY) {
+          if (snapTopLeft.diffY <= snapBottomRight.diffY) {
+            newTop = snapTopLeft.newY;
+            newBottom = newTop + this.height;
+          } else {
+            newBottom = snapBottomRight.newY;
+            newTop = newBottom - this.height;
+          }
+        }
+
+        /* let diffT = newTop - Math.floor(newTop / gridY) * gridY;
         let diffB = (parentHeight - newBottom) - Math.floor((parentHeight - newBottom) / gridY)
          * gridY;
         let diffL = newLeft - Math.floor(newLeft / gridX) * gridX;
@@ -356,13 +407,13 @@ export default {
         newTop -= (alignTop ? diffT : diffB);
         newBottom = parentHeight - height - newTop;
         newLeft -= (alignLeft ? diffL : diffR);
-        newRight = parentWidth - width - newLeft;
-      } */
+        newRight = parentWidth - width - newLeft; */
+      }
 
-      this.rawTop = this.stickStartPos.t - delta.y;
-      this.rawBottom = this.stickStartPos.b - delta.y;
-      this.rawLeft = this.stickStartPos.l - delta.x;
-      this.rawRight = this.stickStartPos.r - delta.x;
+      this.rawTop = newTop;
+      this.rawBottom = newBottom;
+      this.rawLeft = newLeft;
+      this.rawRight = newRight;
       this.$emit('onDrag', this.rect);
     },
 
@@ -382,13 +433,13 @@ export default {
 
       this.limits = {
         minLeft: 0,
-        maxLeft: this.parentWidth,
+        maxLeft: 100,
         minRight: 0,
-        maxRight: this.parentWidth,
+        maxRight: 100,
         minTop: 0,
-        maxTop: this.parentHeight,
+        maxTop: 100,
         minBottom: 0,
-        maxBottom: this.parentHeight,
+        maxBottom: 100,
       };
     },
 
@@ -422,11 +473,11 @@ export default {
         minLeft: 0,
         maxLeft: (this.left + this.width) - this.minW,
         minRight: this.left + this.minW,
-        maxRight: this.parentWidth,
+        maxRight: 100,
         minTop: 0,
         maxTop: (this.top + this.height) - this.minH,
         minBottom: this.top + this.minH,
-        maxBottom: this.parentHeight,
+        maxBottom: 100,
       };
     },
 
@@ -436,25 +487,23 @@ export default {
         y: this.stickStartPos.mouseY - event.pageY,
       };
 
-      const newTop = this.stickStartPos.t - delta.y;
-      const newBottom = this.stickStartPos.b - delta.y;
-      const newRight = this.stickStartPos.r - delta.x;
-      const newLeft = this.stickStartPos.l - delta.x;
+      const offsetX = (100 / this.parentWidth) * delta.x;
+      const offsetY = (100 / this.parentHeight) * delta.y;
 
       if (this.resizeEdges.t) {
-        this.rawTop = newTop;
+        this.rawTop = this.stickStartPos.t - offsetY;
       }
 
       if (this.resizeEdges.b) {
-        this.rawBottom = newBottom;
+        this.rawBottom = this.stickStartPos.b - offsetY;
       }
 
       if (this.resizeEdges.r) {
-        this.rawRight = newRight;
+        this.rawRight = this.stickStartPos.r - offsetX;
       }
 
       if (this.resizeEdges.l) {
-        this.rawLeft = newLeft;
+        this.rawLeft = this.stickStartPos.l - offsetX;
       }
 
       this.$emit('onResize', this.rect);
@@ -476,13 +525,13 @@ export default {
 
       this.limits = {
         minLeft: 0,
-        maxLeft: this.parentWidth,
+        maxLeft: 100,
         minRight: 0,
-        maxRight: this.parentWidth,
+        maxRight: 100,
         minTop: 0,
-        maxTop: this.parentHeight,
+        maxTop: 100,
         minBottom: 0,
-        maxBottom: this.parentHeight,
+        maxBottom: 100,
       };
     },
   },
@@ -491,17 +540,19 @@ export default {
     this.stickDrag = false;
     this.bodyDrag = false;
 
+    // In percent
     this.limits = {
       minLeft: 0,
-      maxLeft: this.parentWidth,
+      maxLeft: 100,
       minRight: 0,
-      maxRight: this.parentWidth,
+      maxRight: 100,
       minTop: 0,
-      maxTop: this.parentHeight,
+      maxTop: 100,
       minBottom: 0,
-      maxBottom: this.parentHeight,
+      maxBottom: 100,
     };
 
+    // In pixels
     this.stickStartPos = {
       mouseX: 0,
       mouseY: 0,
@@ -521,8 +572,8 @@ export default {
 
   mounted() {
     this.parentElement = this.$el.parentNode;
-    this.parentWidth = this.parentW ? this.parentW : this.parentElement.clientWidth;
-    this.parentHeight = this.parentH ? this.parentH : this.parentElement.clientHeight;
+    this.parentWidth = this.parentPixelW || this.parentElement.clientWidth;
+    this.parentHeight = this.parentPixelH || this.parentElement.clientHeight;
 
     document.documentElement.addEventListener('mousemove', this.move);
     document.documentElement.addEventListener('mouseup', this.up);

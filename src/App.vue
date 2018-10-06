@@ -8,7 +8,8 @@
         :gridX="gridX"
         :gridY="gridY"
         :z="1"
-        @onDrag="test($event)"
+        @onStopResizing="test($event)"
+        @onStopDragging="test($event)"
       >
         Test
       </drag-resize>
@@ -43,8 +44,8 @@ export default {
     };
   },
   methods: {
-    test() {
-      // console.log(rect);
+    test(rect) {
+      console.log(rect);
     },
   },
 };

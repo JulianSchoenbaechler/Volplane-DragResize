@@ -389,25 +389,6 @@ export default {
             newTop = newBottom - this.height;
           }
         }
-
-        /* let diffT = newTop - Math.floor(newTop / gridY) * gridY;
-        let diffB = (parentHeight - newBottom) - Math.floor((parentHeight - newBottom) / gridY)
-         * gridY;
-        let diffL = newLeft - Math.floor(newLeft / gridX) * gridX;
-        let diffR = (parentWidth - newRight) - Math.floor((parentWidth - newRight) / gridX) * gridX;
-
-        if (diffT > (gridY / 2)) { diffT -= gridY; }
-        if (diffB > (gridY / 2)) { diffB -= gridY; }
-        if (diffL > (gridX / 2)) { diffL -= gridX; }
-        if (diffR > (gridX / 2)) { diffR -= gridX; }
-
-        if (Math.abs(diffB) < Math.abs(diffT)) { alignTop = false; }
-        if (Math.abs(diffR) < Math.abs(diffL)) { alignLeft = false; }
-
-        newTop -= (alignTop ? diffT : diffB);
-        newBottom = parentHeight - height - newTop;
-        newLeft -= (alignLeft ? diffL : diffR);
-        newRight = parentWidth - width - newLeft; */
       }
 
       this.rawTop = newTop;
@@ -490,21 +471,25 @@ export default {
       const offsetX = (100 / this.parentWidth) * delta.x;
       const offsetY = (100 / this.parentHeight) * delta.y;
 
-      if (this.resizeEdges.t) {
-        this.rawTop = this.stickStartPos.t - offsetY;
+      let newTop = this.stickStartPos.t - offsetY;
+      let newBottom = this.stickStartPos.b - offsetY;
+      let newLeft = this.stickStartPos.l - offsetX;
+      let newRight = this.stickStartPos.r - offsetX;
+
+      if (this.snapToGrid) {
+        const snapTopLeft = this.calcSnapping(newLeft, newTop);
+        const snapBottomRight = this.calcSnapping(newRight, newBottom);
+
+        if (snapTopLeft.snapX) { newLeft = snapTopLeft.newX; }
+        if (snapTopLeft.snapY) { newTop = snapTopLeft.newY; }
+        if (snapBottomRight.snapX) { newRight = snapBottomRight.newX; }
+        if (snapBottomRight.snapY) { newBottom = snapBottomRight.newY; }
       }
 
-      if (this.resizeEdges.b) {
-        this.rawBottom = this.stickStartPos.b - offsetY;
-      }
-
-      if (this.resizeEdges.r) {
-        this.rawRight = this.stickStartPos.r - offsetX;
-      }
-
-      if (this.resizeEdges.l) {
-        this.rawLeft = this.stickStartPos.l - offsetX;
-      }
+      if (this.resizeEdges.t) { this.rawTop = newTop; }
+      if (this.resizeEdges.b) { this.rawBottom = newBottom; }
+      if (this.resizeEdges.r) { this.rawRight = newRight; }
+      if (this.resizeEdges.l) { this.rawLeft = newLeft; }
 
       this.$emit('onResize', this.rect);
     },

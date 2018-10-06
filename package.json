@@ -1,10 +1,32 @@
 {
   "name": "volplane-drag-resize",
   "version": "0.1.0",
-  "description": "A powerful and feature-rich controller editor for Volplane.",
+  "description": "A Vue component for resizing and dragging elements in relative space.",
   "author": "Julian Schönbächler <info@julian-s.ch>",
   "license": "MIT",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JulianSchoenbaechler/Volplane-DragResize.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JulianSchoenbaechler/Volplane-DragResize/issues"
+  },
+  "homepage": "https://volplane.julian-s.ch/",
+  "keywords": [
+    "volplane",
+    "airconsole",
+    "vue",
+    "vue-component",
+    "drag",
+    "resize",
+    "relative"
+  ],
+  "main": "lib/volplane-drag-resize.umd.min.js",
+  "files": [
+    "lib/volplane-drag-resize.common.js",
+    "lib/volplane-drag-resize.css",
+    "src"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name volplane-drag-resize --dest ./lib ./src/components/DragResize.vue && vue-cli-service build --dest ./dist",

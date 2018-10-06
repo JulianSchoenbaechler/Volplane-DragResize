@@ -1,3 +1,5 @@
+/*! Volplane DragResize Component v1.0.0 | MIT License | https://volplane.julian-s.ch/ */
+
 .vdr {
   position: relative;
   box-sizing: border-box;
@@ -10,15 +12,15 @@
   top: 0;
   left: 0;
   box-sizing: border-box;
-  outline: 1px dashed #d6d6d6;
+  outline: 1px dashed #f8f8ec;
 }
 .vdr-stick {
   box-sizing: border-box;
   position: absolute;
   font-size: 1px;
-  background: #ffffff;
-  border: 1px solid #6c6c6c;
-  box-shadow: 0 0 2px #bbb;
+  background: #f8f8ec;
+  border: 1px solid #313133;
+  box-shadow: 0 0 2px #313133;
 }
 .inactive .vdr-stick {
   display: none;

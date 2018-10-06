@@ -2,6 +2,7 @@
   <div id="app">
     <div class="container">
       <drag-resize
+        class="demo"
         :parent-limitation="false"
         :is-active="false"
         :snapToGrid="grid"
@@ -95,5 +96,8 @@ export default {
 .grid-table th,
 .grid-table td {
   border: 1px solid blue;
+}
+.demo {
+  background-color: #313133;
 }
 </style>

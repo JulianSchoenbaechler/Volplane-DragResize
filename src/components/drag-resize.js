@@ -31,19 +31,24 @@ export default {
 
   props: {
     isActive: {
-      type: Boolean, default: false,
+      type: Boolean,
+      default: false,
     },
     preventActiveBehavior: {
-      type: Boolean, default: false,
+      type: Boolean,
+      default: false,
     },
     isDraggable: {
-      type: Boolean, default: true,
+      type: Boolean,
+      default: true,
     },
     isResizable: {
-      type: Boolean, default: true,
+      type: Boolean,
+      default: true,
     },
     snapToGrid: {
-      type: Boolean, default: false,
+      type: Boolean,
+      default: false,
     },
     gridX: {
       type: Number,

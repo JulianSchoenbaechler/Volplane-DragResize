@@ -1,6 +1,9 @@
 {
   "name": "volplane-drag-resize",
   "version": "0.1.0",
+  "description": "A powerful and feature-rich controller editor for Volplane.",
+  "author": "Julian Schönbächler <info@julian-s.ch>",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -15,30 +18,7 @@
     "@vue/cli-plugin-eslint": "^3.0.4",
     "@vue/cli-service": "^3.0.4",
     "@vue/eslint-config-airbnb": "^3.0.4",
+    "eslint": "^5.6.1",
     "vue-template-compiler": "^2.5.17"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/airbnb"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 9"
-  ]
+  }
 }

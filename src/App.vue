@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div class="container">
-      <drag-resize :preventActiveBehavior="false" :isActive="false">
+      <drag-resize
+        :parent-limitation="false"
+        :is-active="false">
         Test
       </drag-resize>
     </div>
@@ -12,7 +14,7 @@
 import DragResize from './components/DragResize.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     DragResize,
   },

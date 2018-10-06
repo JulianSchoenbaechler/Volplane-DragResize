@@ -238,6 +238,14 @@ export default {
 
       this.left = left;
     },
+
+    parentPixelW(parentW) {
+      this.parentWidth = parentW;
+    },
+
+    parentPixelH(parentH) {
+      this.parentHeight = parentH;
+    },
   },
 
   methods: {

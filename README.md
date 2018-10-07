@@ -11,7 +11,10 @@
 - [License](#license)
 
 ## Description
-This is a Vue component written with Vue-CLI 3 for resizing and dragging elements in relative space. All position and size properties are handled and calculated in percentage values, relative to the parent element. This library is inspired by vue-drag-resize by author, just with less features and more constraints. It is primarily built for the use in Volplane's Controller Editor (v1.1), and therefore limited to only the features that are actually needed in this environment. However, you are free to advance this project und file up a pull request for additional functionality.
+This is a Vue component written with [Vue-CLI 3](https://cli.vuejs.org/) for resizing and dragging elements in relative space. All position and size properties are handled and calculated in percentage values, relative to the parent element. This library is inspired by [vue-drag-resize](https://github.com/kirillmurashov/vue-drag-resize) by [kirillmurashov](https://github.com/kirillmurashov), just with less features and more constraints. It is primarily built for the use in [Volplane's Controller Editor](https://github.com/JulianSchoenbaechler/Volplane-ControllerEditor) (v1.1), and therefore limited to only the features that are actually needed in this environment. However, you are free to advance this project und file up a pull request for additional functionality.
+
+[The Volplane Project](https://volplane.julian-s.ch/)
+
 
 ## Features
 - Lightweight
@@ -298,7 +301,6 @@ Defines the axis on which the element is draggable. Available values are `x`, `y
 <vue-drag-resize axis="x">
 ```
 
----
 ### Events
 
 #### drag
@@ -408,7 +410,7 @@ Called whenever the component gets deselected.
 ```
 
 ## Contributing
-Contributions of any kind are welcome. Open up a pull request or file a ticket.
+Contributions of any kind are welcome. Open up a [pull request](pulls) or [file a ticket](issues).
 
 **Compiles and hot-reloads for development:**
 ```bash
@@ -429,4 +431,4 @@ npm run lint
 [MIT license](LICENSE)
 
 ---
-&copy; Julian Schönbächler, 2018
+&copy; [Julian Schönbächler](https://julian-s.ch/), 2018

@@ -410,7 +410,7 @@ Called whenever the component gets deselected.
 ```
 
 ## Contributing
-Contributions of any kind are welcome. Open up a [pull request](pulls) or [file a ticket](issues).
+Contributions of any kind are welcome. Open up a [pull request](https://github.com/JulianSchoenbaechler/Volplane-DragResize/pulls) or [file a ticket](https://github.com/JulianSchoenbaechler/Volplane-DragResize/issues).
 
 **Compiles and hot-reloads for development:**
 ```bash

@@ -1,6 +1,6 @@
 {
   "name": "volplane-drag-resize",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Vue component for resizing and dragging elements in relative space.",
   "author": "Julian Schönbächler <info@julian-s.ch>",
   "license": "MIT",

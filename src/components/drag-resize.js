@@ -55,14 +55,14 @@ export default {
       type: Number,
       default: 5,
       validator(val) {
-        return val > 0;
+        return (val > 0) && (val <= 100);
       },
     },
     gridY: {
       type: Number,
       default: 5,
       validator(val) {
-        return val > 0;
+        return (val > 0) && (val <= 100);
       },
     },
     parentPixelW: {
@@ -83,28 +83,28 @@ export default {
       type: Number,
       default: 10,
       validator(val) {
-        return val > 0;
+        return (val > 0) && (val <= 100);
       },
     },
     h: {
       type: Number,
       default: 10,
       validator(val) {
-        return val > 0;
+        return (val > 0) && (val <= 100);
       },
     },
     minW: {
       type: Number,
       default: 5,
       validator(val) {
-        return val > 0;
+        return (val > 0) && (val <= 100);
       },
     },
     minH: {
       type: Number,
       default: 5,
       validator(val) {
-        return val > 0;
+        return (val > 0) && (val <= 100);
       },
     },
     x: {
@@ -239,6 +239,82 @@ export default {
       this.left = left;
     },
 
+    active(isActive) {
+      if (isActive) {
+        this.$emit('select');
+      } else {
+        this.$emit('deselect');
+      }
+    },
+
+    isActive(val) {
+      this.active = val;
+    },
+
+    x(val) {
+      if (this.stickDrag || this.bodyDrag) {
+        return;
+      }
+
+      const width = this.right - this.left;
+      const delta = 100 - val - width;
+
+      if (delta <= 0) {
+        this.rawLeft = 100 - width;
+        this.rawRight = 100;
+      } else {
+        this.rawLeft = val;
+        this.rawRight = val + width;
+      }
+    },
+
+    y(val) {
+      if (this.stickDrag || this.bodyDrag) {
+        return;
+      }
+
+      const height = this.bottom - this.top;
+      const delta = 100 - val - height;
+
+      if (delta <= 0) {
+        this.rawTop = 100 - height;
+        this.rawBottom = 100;
+      } else {
+        this.rawTop = val;
+        this.rawBottom = val + height;
+      }
+    },
+
+    w(val) {
+      if (this.stickDrag || this.bodyDrag) {
+        return;
+      }
+
+      if ((val > 0) && (val <= 100)) {
+        if ((val + this.left) > 100) {
+          this.rawLeft = 100 - val;
+          this.rawRight = 100;
+        } else {
+          this.rawRight = this.left + val;
+        }
+      }
+    },
+
+    h(val) {
+      if (this.stickDrag || this.bodyDrag) {
+        return;
+      }
+
+      if ((val > 0) && (val <= 100)) {
+        if ((val + this.top) > 100) {
+          this.rawTop = 100 - val;
+          this.rawBottom = 100;
+        } else {
+          this.rawBottom = this.top + val;
+        }
+      }
+    },
+
     parentPixelW(parentW) {
       this.parentWidth = parentW;
     },
@@ -326,8 +402,6 @@ export default {
         return;
       }
 
-      this.$emit('onClicked', event);
-
       if (!this.isDraggable || !this.active) {
         return;
       }
@@ -403,13 +477,13 @@ export default {
       this.rawBottom = newBottom;
       this.rawLeft = newLeft;
       this.rawRight = newRight;
-      this.$emit('onDrag', this.rect);
+      this.$emit('drag', this.rect);
     },
 
     bodyUp() {
       this.bodyDrag = false;
-      this.$emit('onDrag', this.rect);
-      this.$emit('onStopDragging', this.rect);
+      this.$emit('drag', this.rect);
+      this.$emit('stopDrag', this.rect);
 
       this.stickStartPos = {
         mouseX: 0,
@@ -499,13 +573,13 @@ export default {
       if (this.resizeEdges.r) { this.rawRight = newRight; }
       if (this.resizeEdges.l) { this.rawLeft = newLeft; }
 
-      this.$emit('onResize', this.rect);
+      this.$emit('resize', this.rect);
     },
 
     stickUp() {
       this.stickDrag = false;
-      this.$emit('onResize', this.rect);
-      this.$emit('onStopResizing', this.rect);
+      this.$emit('resize', this.rect);
+      this.$emit('stopResize', this.rect);
 
       this.stickStartPos = {
         mouseX: 0,

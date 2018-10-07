@@ -9,8 +9,8 @@
         :gridX="gridX"
         :gridY="gridY"
         :z="1"
-        @onStopResizing="test($event)"
-        @onStopDragging="test($event)"
+        @stopResize="test($event)"
+        @stopDrag="test($event)"
       >
         Test
       </drag-resize>

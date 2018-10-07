@@ -3,8 +3,11 @@
     <div class="container">
       <drag-resize
         class="demo"
-        :parent-limitation="false"
-        :is-active="false"
+        :isActive="true"
+        :x="x"
+        :y="y"
+        :w="w"
+        :h="h"
         :snapToGrid="grid"
         :gridX="gridX"
         :gridY="gridY"
@@ -39,6 +42,10 @@ export default {
   },
   data() {
     return {
+      x: 0,
+      y: 0,
+      w: 10,
+      h: 20,
       grid: true,
       gridX: 25,
       gridY: 50,

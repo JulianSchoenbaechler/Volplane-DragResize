@@ -1,8 +1,8 @@
 <div class="vdr"
   :class="active || isActive ? 'active' : 'inactive'"
   :style="style"
-  @mousedown.stop.prevent="bodyDown($event)"
-  @touchstart.stop.prevent="bodyDown($event)"
+  @mousedown="bodyDown($event)"
+  @touchstart="bodyDown($event)"
 >
   <slot></slot>
   <div
@@ -10,8 +10,8 @@
     class="vdr-stick"
     :class="['vdr-stick-' + stick, isResizable ? '' : 'not-resizable']"
     :style="vdrStick(stick)"
-    @mousedown.stop.prevent="stickDown(stick, $event)"
-    @touchstart.stop.prevent="stickDown(stick, $event)"
+    @mousedown="stickDown(stick, $event)"
+    @touchstart="stickDown(stick, $event)"
   >
   </div>
 </div>

@@ -3,11 +3,25 @@
     <div class="container">
       <drag-resize
         class="demo"
-        :isActive="true"
         :x="x"
         :y="y"
         :w="w"
         :h="h"
+        :snapToGrid="grid"
+        :gridX="gridX"
+        :gridY="gridY"
+        :z="1"
+        @stopResize="test($event)"
+        @stopDrag="test($event)"
+      >
+        Test
+      </drag-resize>
+      <drag-resize
+        class="demo"
+        :x="40"
+        :y="40"
+        :w="10"
+        :h="10"
         :snapToGrid="grid"
         :gridX="gridX"
         :gridY="gridY"

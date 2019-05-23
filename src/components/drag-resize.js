@@ -27,6 +27,7 @@ export default {
       bottom: this.y + this.h,
       left: this.x,
       active: this.isActive,
+      clicked: false,
     };
   },
 
@@ -326,7 +327,8 @@ export default {
 
   methods: {
     deselect() {
-      if (this.preventActiveBehavior) {
+      if (this.preventActiveBehavior || this.clicked) {
+        this.clicked = false;
         return;
       }
       this.active = false;
@@ -417,8 +419,8 @@ export default {
       this.limits = this.calcDragLimitation();
 
       this.bodyDrag = true;
+      this.clicked = true;
 
-      event.stopPropagation();
       event.preventDefault();
     },
 
@@ -533,7 +535,6 @@ export default {
 
       this.limits = this.calcResizeLimitation();
 
-      event.stopPropagation();
       event.preventDefault();
     },
 

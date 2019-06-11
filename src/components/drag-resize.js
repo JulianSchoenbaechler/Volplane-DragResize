@@ -420,8 +420,6 @@ export default {
 
       this.bodyDrag = true;
       this.clicked = true;
-
-      event.preventDefault();
     },
 
     calcDragLimitation() {
@@ -534,8 +532,6 @@ export default {
       this.stickDrag = true;
 
       this.limits = this.calcResizeLimitation();
-
-      event.preventDefault();
     },
 
     calcResizeLimitation() {

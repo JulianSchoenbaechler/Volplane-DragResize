@@ -1,17 +1,14 @@
 <div class="vdr"
-  :class="active ? 'active' : 'inactive'"
-  :style="style"
-  @mousedown="bodyDown($event)"
-  @touchstart="bodyDown($event)"
->
+     :class="active ? 'active' : 'inactive'"
+     :style="style"
+     @mousedown.prevent="bodyDown($event)"
+     @touchstart.prevent="bodyDown($event)">
   <slot></slot>
-  <div
-    v-for="stick in sticks"
-    class="vdr-stick"
-    :class="['vdr-stick-' + stick, isResizable ? '' : 'not-resizable']"
-    :style="vdrStick(stick)"
-    @mousedown="stickDown(stick, $event)"
-    @touchstart="stickDown(stick, $event)"
-  >
+  <div v-for="stick in sticks"
+       class="vdr-stick"
+       :class="['vdr-stick-' + stick, isResizable ? '' : 'not-resizable']"
+       :style="vdrStick(stick)"
+       @mousedown.stop.prevent="stickDown(stick, $event)"
+       @touchstart.stop.prevent="stickDown(stick, $event)">
   </div>
 </div>

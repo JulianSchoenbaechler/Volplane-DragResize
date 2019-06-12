@@ -3,7 +3,9 @@
 .vdr {
   position: absolute;
   box-sizing: border-box;
+  user-select: none;
 }
+
 .vdr.active::before {
   position: absolute;
   content: '';
@@ -14,6 +16,7 @@
   box-sizing: border-box;
   outline: 1px dashed #f8f8ec;
 }
+
 .vdr-stick {
   box-sizing: border-box;
   position: absolute;
@@ -21,24 +24,59 @@
   background: #f8f8ec;
   border: 1px solid #313133;
   box-shadow: 0 0 2px #313133;
+  user-select: none;
+  z-index: 1;
 }
+
 .inactive .vdr-stick {
   display: none;
 }
-.vdr-stick-tl, .vdr-stick-br {
-  cursor: nwse-resize;
-}
+
 .vdr-stick-tm, .vdr-stick-bm {
   left: 50%;
-  cursor: ns-resize;
 }
-.vdr-stick-tr, .vdr-stick-bl {
-  cursor: nesw-resize;
-}
+
 .vdr-stick-ml, .vdr-stick-mr {
   top: 50%;
+}
+
+.vdr-stick.not-resizable {
+  display: none;
+}
+
+.vdr-cursor-tl, .vdr-cursor-br {
+  cursor: nwse-resize;
+}
+
+.vdr-cursor-tm, .vdr-cursor-bm {
+  cursor: ns-resize;
+}
+
+.vdr-cursor-tr, .vdr-cursor-bl {
+  cursor: nesw-resize;
+}
+
+.vdr-cursor-ml, .vdr-cursor-mr {
   cursor: ew-resize;
 }
-.vdr-stick.not-resizable{
-  display: none;
+
+.vdr-cursor-grab {
+  cursor: grab;
+}
+
+.vdr-cursor-grabbing {
+  cursor: grabbing;
+}
+
+.vdr-blend {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  user-select: none;
+}
+
+.vdr-blend:hover, .vdr-blend.active {
+  background-color: #f8f8ec10;
 }

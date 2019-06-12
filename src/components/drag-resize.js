@@ -27,6 +27,8 @@ export default {
       bottom: this.y + this.h,
       left: this.x,
       active: this.isActive,
+      bodyDrag: false,
+      stickDrag: false,
       clicked: false,
     };
   },
@@ -420,6 +422,8 @@ export default {
 
       this.bodyDrag = true;
       this.clicked = true;
+
+      document.body.classList.add('vdr-cursor-grabbing');
     },
 
     calcDragLimitation() {
@@ -507,6 +511,8 @@ export default {
         minBottom: 0,
         maxBottom: 100,
       };
+
+      document.body.classList.remove('vdr-cursor-grabbing');
     },
 
     stickDown(stick, event) {
@@ -532,6 +538,8 @@ export default {
       this.stickDrag = true;
 
       this.limits = this.calcResizeLimitation();
+
+      document.body.classList.add(`vdr-cursor-${stick}`);
     },
 
     calcResizeLimitation() {
@@ -603,13 +611,17 @@ export default {
         minBottom: 0,
         maxBottom: 100,
       };
+
+      document.body.classList.remove(
+        'vdr-cursor-tl', 'vdr-cursor-br',
+        'vdr-cursor-tm', 'vdr-cursor-bm',
+        'vdr-cursor-tr', 'vdr-cursor-bl',
+        'vdr-cursor-ml', 'vdr-cursor-mr',
+      );
     },
   },
 
   created() {
-    this.stickDrag = false;
-    this.bodyDrag = false;
-
     // In percent
     this.limits = {
       minLeft: 0,

@@ -4,18 +4,7 @@ module.exports = {
   env: {
     node: true,
     browser: true,
-    jquery: true,
   },
-
-  globals: {
-    $: true,
-    jQuery: true,
-  },
-
-  extends: [
-    'plugin:vue/essential',
-    '@vue/airbnb',
-  ],
 
   rules: {
     'no-console': 'off',
@@ -26,4 +15,10 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint',
   },
+
+  extends: [
+    'plugin:vue/strongly-recommended',
+    'plugin:vue/recommended',
+    '@vue/airbnb'
+  ]
 };

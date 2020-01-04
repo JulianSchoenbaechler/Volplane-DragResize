@@ -1,12 +1,32 @@
 {
   "name": "volplane-drag-resize",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "A Vue component for resizing and dragging elements in relative space.",
   "author": "Julian Schönbächler <info@julian-s.ch>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JulianSchoenbaechler/Volplane-DragResize.git"
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name volplane-drag-resize --dest ./lib ./src/components/DragResize.vue && vue-cli-service build --dest ./dist",
+    "lint": "vue-cli-service lint"
+  },
+  "main": "lib/volplane-drag-resize.umd.min.js",
+  "files": [
+    "lib/volplane-drag-resize.common.js",
+    "lib/volplane-drag-resize.css",
+    "src"
+  ],
+  "dependencies": {
+    "core-js": "^3.4.4",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.1.2",
+    "@vue/cli-plugin-eslint": "^4.1.2",
+    "@vue/cli-service": "^4.1.2",
+    "@vue/eslint-config-airbnb": "^5.0.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue": "^6.1.2",
+    "vue-template-compiler": "^2.6.11"
   },
   "bugs": {
     "url": "https://github.com/JulianSchoenbaechler/Volplane-DragResize/issues"
@@ -21,25 +41,9 @@
     "resize",
     "relative"
   ],
-  "main": "lib/volplane-drag-resize.umd.min.js",
-  "files": [
-    "lib/volplane-drag-resize.common.js",
-    "lib/volplane-drag-resize.css",
-    "src"
-  ],
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name volplane-drag-resize --dest ./lib ./src/components/DragResize.vue && vue-cli-service build --dest ./dist",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "vue": "^2.6.10"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
-    "@vue/eslint-config-airbnb": "^3.0.5",
-    "vue-template-compiler": "^2.6.10"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JulianSchoenbaechler/Volplane-DragResize.git"
   }
 }

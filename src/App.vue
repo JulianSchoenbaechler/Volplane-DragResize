@@ -7,9 +7,9 @@
         :y="y"
         :w="w"
         :h="h"
-        :snapToGrid="grid"
-        :gridX="gridX"
-        :gridY="gridY"
+        :snap-to-grid="grid"
+        :grid-x="gridX"
+        :grid-y="gridY"
         :z="1"
         @stopResize="test($event)"
         @stopDrag="test($event)"
@@ -22,16 +22,19 @@
         :y="40"
         :w="10"
         :h="10"
-        :snapToGrid="grid"
-        :gridX="gridX"
-        :gridY="gridY"
+        :snap-to-grid="grid"
+        :grid-x="gridX"
+        :grid-y="gridY"
         :z="1"
         @stopResize="test($event)"
         @stopDrag="test($event)"
       >
         Test
       </drag-resize>
-      <table class="grid-table" v-if="grid">
+      <table
+        v-if="grid"
+        class="grid-table"
+      >
         <tr
           v-for="i in Math.ceil(100 / gridY)"
           :key="`row${i}`"
@@ -39,7 +42,7 @@
           <td
             v-for="j in Math.ceil(100 / gridX)"
             :key="`column${j}`"
-          ></td>
+          />
         </tr>
       </table>
     </div>

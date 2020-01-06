@@ -34,6 +34,10 @@ export default {
   },
 
   props: {
+    selectionContainer: {
+      type: String,
+      default: undefined,
+    },
     isActive: {
       type: Boolean,
       default: false,
@@ -333,6 +337,7 @@ export default {
         this.clicked = false;
         return;
       }
+
       this.active = false;
     },
 
@@ -657,16 +662,24 @@ export default {
     this.parentWidth = this.parentPixelW || this.parentElement.clientWidth;
     this.parentHeight = this.parentPixelH || this.parentElement.clientHeight;
 
-    document.documentElement.addEventListener('mousemove', this.move);
-    document.documentElement.addEventListener('mouseup', this.up);
-    document.documentElement.addEventListener('mouseleave', this.up);
-    document.documentElement.addEventListener('mousedown', this.deselect);
+    const listenerElement = this.selectionContainer
+      ? document.getElementById(this.selectionContainer)
+      : document.documentElement;
+
+    listenerElement.addEventListener('mousemove', this.move);
+    listenerElement.addEventListener('mouseup', this.up);
+    listenerElement.addEventListener('mouseleave', this.up);
+    listenerElement.addEventListener('mousedown', this.deselect);
   },
 
   beforeDestroy() {
-    document.documentElement.removeEventListener('mousemove', this.move);
-    document.documentElement.removeEventListener('mouseup', this.up);
-    document.documentElement.removeEventListener('mouseleave', this.up);
-    document.documentElement.removeEventListener('mousedown', this.deselect);
+    const listenerElement = this.selectionContainer
+      ? document.getElementById(this.selectionContainer)
+      : document.documentElement;
+
+    listenerElement.removeEventListener('mousemove', this.move);
+    listenerElement.removeEventListener('mouseup', this.up);
+    listenerElement.removeEventListener('mouseleave', this.up);
+    listenerElement.removeEventListener('mousedown', this.deselect);
   },
 };

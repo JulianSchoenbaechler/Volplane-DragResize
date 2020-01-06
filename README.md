@@ -11,7 +11,7 @@
 - [License](#license)
 
 ## Description
-This is a Vue component written with [Vue-CLI](https://cli.vuejs.org/) for resizing and dragging elements in relative space. All position and size properties are handled and calculated in percentage values, relative to the parent element. This library is inspired by [vue-drag-resize](https://github.com/kirillmurashov/vue-drag-resize) by [kirillmurashov](https://github.com/kirillmurashov), just with less features and more constraints. It is primarily built for the use in [Volplane's Controller Editor](https://github.com/JulianSchoenbaechler/Volplane-ControllerEditor) (v1.1), and therefore limited to only the features that are actually needed in this environment. However, you are free to advance this project und file up a pull request for additional functionality.
+This is a Vue component written with [Vue-CLI](https://cli.vuejs.org/) for resizing and dragging elements in relative space. All position and size properties are handled and calculated in percentage values, relative to the parent element. This library is inspired by [vue-drag-resize](https://github.com/kirillmurashov/vue-drag-resize) by [kirillmurashov](https://github.com/kirillmurashov), just with less features and more constraints. It is primarily built for the use in [Volplane's Controller Editor](https://github.com/JulianSchoenbaechler/Volplane-ControllerEditor) (v2), and therefore limited to only the features that are actually needed in this environment. However, you are free to advance this project und file up a pull request for additional functionality.
 
 [The Volplane Project](https://volplane.julian-s.ch/)
 
@@ -91,6 +91,14 @@ Vue.component('drag-resize', DragResize);
 ```
 
 ### Props
+
+#### selectionContainer
+Type: `String`<br>
+Required: `false`<br>
+Default: `undefined`
+
+Defines a container by an `id` where select/deselect events are listened to.
+It defaults to the document root.
 
 #### isActive
 Type: `Boolean`<br>

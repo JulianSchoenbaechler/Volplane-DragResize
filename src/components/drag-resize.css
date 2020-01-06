@@ -1,4 +1,4 @@
-/*! Volplane DragResize Component v1.0.0 | MIT License | https://volplane.julian-s.ch/ */
+/*! Volplane DragResize Component v1.1.0 | MIT License | https://volplane.julian-s.ch/ */
 
 .vdr {
   position: absolute;
@@ -44,28 +44,32 @@
   display: none;
 }
 
-.vdr-cursor-tl, .vdr-cursor-br {
-  cursor: nwse-resize;
+.vdr-cursor-grabbing {
+  cursor: grabbing;
 }
 
-.vdr-cursor-tm, .vdr-cursor-bm {
-  cursor: ns-resize;
-}
-
-.vdr-cursor-tr, .vdr-cursor-bl {
-  cursor: nesw-resize;
-}
-
-.vdr-cursor-ml, .vdr-cursor-mr {
-  cursor: ew-resize;
-}
-
-.vdr-cursor-grab {
+body:not(.vdr-cursor-grabbing) .vdr-cursor-grab {
   cursor: grab;
 }
 
-.vdr-cursor-grabbing {
-  cursor: grabbing;
+body:not(.vdr-cursor-grabbing) .vdr-cursor-tl,
+body:not(.vdr-cursor-grabbing) .vdr-cursor-br {
+  cursor: nwse-resize;
+}
+
+body:not(.vdr-cursor-grabbing) .vdr-cursor-tm,
+body:not(.vdr-cursor-grabbing) .vdr-cursor-bm {
+  cursor: ns-resize;
+}
+
+body:not(.vdr-cursor-grabbing) .vdr-cursor-tr,
+body:not(.vdr-cursor-grabbing) .vdr-cursor-bl {
+  cursor: nesw-resize;
+}
+
+body:not(.vdr-cursor-grabbing) .vdr-cursor-ml,
+body:not(.vdr-cursor-grabbing) .vdr-cursor-mr {
+  cursor: ew-resize;
 }
 
 .vdr-blend {
@@ -77,6 +81,6 @@
   user-select: none;
 }
 
-.vdr-blend:hover, .vdr-blend.active {
+body:not(.vdr-cursor-grabbing) .vdr-blend:hover {
   background-color: #f8f8ec10;
 }

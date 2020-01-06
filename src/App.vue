@@ -3,6 +3,7 @@
     <div class="container">
       <drag-resize
         class="demo"
+        selection-container="app"
         :x="x"
         :y="y"
         :w="w"

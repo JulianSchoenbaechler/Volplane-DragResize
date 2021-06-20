@@ -1,5 +1,7 @@
 # Volplane-DragResize
-> A Vue component for resizing and dragging elements in relative space.
+> **Note:** _The Volplane Project_ has been archived and will not undergo further development!
+
+A Vue component for resizing and dragging elements in relative space.
 
 ## Table of Contents
 - [Description](#description)
